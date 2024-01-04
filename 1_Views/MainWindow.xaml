@@ -1,0 +1,140 @@
+﻿<Window x:Class="B2S_OCR_Tool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodel="clr-namespace:B2S_OCR_Tool._2_ViewModels"
+        mc:Ignorable="d"
+        FontFamily="./Assets/Font/Roboto-Regular.ttf"
+        d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowModel}"
+        Title="Buy2Sell OCR TOOL" MinHeight="775" MinWidth="1280" MaxHeight="775" MaxWidth="750" ResizeMode="NoResize" WindowStyle="ToolWindow" >
+
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                <GradientStop Color="#1F1F1F" Offset="0" />
+                <GradientStop Color="{StaticResource BackgroundColorNS}" Offset="1" />
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition  Width = "auto" />
+            <ColumnDefinition Width = "728*" />
+            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height = "auto" />
+            <RowDefinition Height = "auto" />
+            <RowDefinition Height = "auto" />
+            <RowDefinition Height = "*" />
+            <RowDefinition Height = "auto" />
+        </Grid.RowDefinitions>
+
+        <Border BorderThickness="1" CornerRadius="4" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="{StaticResource ForegroundColor}" BorderBrush="{StaticResource BorderColor}" Margin="8,8,3,0" Padding="8">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox x:Name="cbDeNoice" Foreground="{StaticResource LightTextColor}" FontSize="16" IsChecked="{Binding DeNoise}" ToolTip="Can help achieve better results in low light or high reflection environments" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,16,0">DeNoise</CheckBox>
+                <ComboBox x:Name="cbProductSelect" Foreground="{StaticResource LightTextColor}" FontSize="16" SelectedItem="{Binding BrandOptionSelected}" ItemsSource="{Binding BrandOptions}" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="128" ToolTip="Select the brand you want to use" Margin="0,0,16,0"/>
+                <ComboBox x:Name="cbLangSelegt" Foreground="{StaticResource LightTextColor}" FontSize="16" SelectedItem="{Binding TextColorOptionsSelected}" ItemsSource="{Binding TextColorOptionsDropdownOptions}" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="128" Margin="0,0,16,0" ToolTip="Select the color of the text on the product"/>
+
+            </StackPanel>
+        </Border>
+
+        <Border BorderThickness="1" CornerRadius="4" Grid.Row="1" Grid.Column="0" Background="{StaticResource ForegroundColor}" BorderBrush="{StaticResource BorderColor}" Margin="8,8,4,4" Padding="8">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Foreground="{StaticResource LightTextColor}" FontSize="16" FontWeight="Bold" Margin="0,0,0,8">Camera Preview</TextBlock>
+                <TextBlock Foreground="{StaticResource LightTextColor}" FontSize="12" Margin="0,0,0,8">Center the object for the best result</TextBlock>
+                <Border BorderThickness="1" Background="{StaticResource BackgroundColor}" BorderBrush="{StaticResource BorderColor}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Image x:Name="imgCamPreview" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Height="256" Width="455" ToolTip="Live view from the camera"/>
+
+                        <Border Grid.Column="0" Grid.Row="0" BorderBrush="{StaticResource CrosshairColor}" BorderThickness="0 0 1 1"/>
+                        <Border Grid.Column="1" Grid.Row="0" BorderBrush="{StaticResource CrosshairColor}" BorderThickness="1 0 1 1"/>
+                        <Border Grid.Column="2" Grid.Row="0" BorderBrush="{StaticResource CrosshairColor}" BorderThickness="1 0 0 1"/>
+                        <Border Grid.Column="0" Grid.Row="1" BorderBrush="{StaticResource CrosshairColor}" BorderThickness="0 1 1 1"/>
+                        <Border Grid.Column="1" Grid.Row="1" BorderBrush="{StaticResource CrosshairColor}" BorderThickness="1"/>
+                        <Border Grid.Column="2" Grid.Row="1" BorderBrush="{StaticResource CrosshairColor}" BorderThickness="1 1 0 1"/>
+                        <Border Grid.Column="0" Grid.Row="2" BorderBrush="{StaticResource CrosshairColor}" BorderThickness="0 1 1 0"/>
+                        <Border Grid.Column="1" Grid.Row="2" BorderBrush="{StaticResource CrosshairColor}" BorderThickness="1 1 1 0"/>
+                        <Border Grid.Column="2" Grid.Row="2" BorderBrush="{StaticResource CrosshairColor}" BorderThickness="1 1 0 0"/>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <Border BorderThickness="1" CornerRadius="4" Grid.Row="1" Grid.Column="1" Background="{StaticResource ForegroundColor}" BorderBrush="{StaticResource BorderColor}" Margin="4,8,3,4" Padding="8" Grid.ColumnSpan="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Foreground="{StaticResource LightTextColor}" FontSize="16" FontWeight="Bold" Margin="0,0,0,8">Result</TextBlock>
+                <TextBox Grid.Row="1" x:Name="dbInfo" Text="{Binding DBInfoText}" IsReadOnly="True" Foreground="{StaticResource LightTextColor}" Background="{StaticResource BackgroundColor}" BorderBrush="{StaticResource BorderColor}" ToolTip="Shows the result from the database based on the analysis" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" MaxHeight="275"></TextBox>
+            </Grid>
+        </Border>
+
+        <Border BorderThickness="1" CornerRadius="4" Grid.Row="2" Grid.Column="0" Background="{StaticResource ForegroundColor}" BorderBrush="{StaticResource BorderColor}" Margin="8,8,4,0" Padding="8">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Foreground="{StaticResource LightTextColor}" FontSize="16" FontWeight="Bold" Margin="0,0,0,8">Barcode</TextBlock>
+                <TextBox Grid.Row="1" x:Name="tbBarcodes" Text="{Binding BarcodeText}" IsReadOnly="True" Foreground="{StaticResource LightTextColor}" Background="{StaticResource BackgroundColor}" BorderBrush="{StaticResource BorderColor}" ToolTip="Shows any barcodes that is found on the object" Height="32"></TextBox>
+            </Grid>
+        </Border>
+
+        <Border BorderThickness="1" CornerRadius="4" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Background="{StaticResource ForegroundColor}" BorderBrush="{StaticResource BorderColor}" Margin="4,8,3,0" Padding="8" Grid.ColumnSpan="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Foreground="{StaticResource LightTextColor}" FontSize="16" FontWeight="Bold" Margin="0,0,0,8">Text on product</TextBlock>
+                <TextBox Grid.Row="1" x:Name="tbOcrText" Text="{Binding OcrText}" IsReadOnly="True" Foreground="{StaticResource LightTextColor}" Background="{StaticResource BackgroundColor}" BorderBrush="{StaticResource BorderColor}" ToolTip="Shows the raw text from the OCR" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBox>
+            </Grid>
+        </Border>
+
+        <Border BorderThickness="1" CornerRadius="4" Grid.Row="3" Grid.Column="0" Background="{StaticResource ForegroundColor}" BorderBrush="{StaticResource BorderColor}" Margin="8,8,4,0" Padding="8">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Foreground="{StaticResource LightTextColor}" FontSize="16" FontWeight="Bold" Margin="0,0,0,8">Most common words</TextBlock>
+                <TextBox Grid.Row="1" x:Name="tbProductData" Text="{Binding ProductDataText}" IsReadOnly="True" Foreground="{StaticResource LightTextColor}" Background="{StaticResource BackgroundColor}" BorderBrush="{StaticResource BorderColor}" ToolTip="Shows the most common words throughout the runtime" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBox>
+            </Grid>
+        </Border>
+
+        <Border BorderThickness="1" CornerRadius="4" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Background="{StaticResource ForegroundColor}" BorderBrush="{StaticResource BorderColor}" Margin="8,8,3,8" Padding="8">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="btnGetBarCode" Command="{Binding GetBarcodeCommand}" IsEnabled="{Binding NotRunning}" Style="{StaticResource SecondaryButton}" Width="116" Height="32" TabIndex="1" Margin="0,0,16,0">Get Barcode</Button>
+                    <Button x:Name="btnGetText" Command="{Binding GetTextCommand}" IsEnabled="{Binding NotRunning}" Style="{StaticResource PrimaryButton}" Width="89" Height="32" TabIndex="0">Get Text</Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
